@@ -84,6 +84,7 @@ prometheus_scrape_configs:
         - '{job="contensis"'
         - '{job="cassandra"'
         - '{__name__=~"job:.*"}'
+        - '{job!=""}'
 
 # Alternative config file name, searched in ansible templates path.
 prometheus_config_file: 'prometheus.yml.j2'
