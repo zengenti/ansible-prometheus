@@ -67,6 +67,23 @@ prometheus_scrape_configs:
     file_sd_configs:
       - files:
           - "{{ prometheus_config_dir }}/file_sd/node.yml"
+  - job_name: "cassandra"
+    file_sd_configs:
+       - files:
+          - "{{ prometheus_config_dir }}/file_sd/cassandra.yml"
+  - job_name: "federate"
+    honor_labels: true
+    metrics_path: /federate
+    file_sd_configs:
+       - files:
+          - "{{ prometheus_config_dir }}/file_sd/federate.yml"
+    params:
+      match[]:
+        - '{job="prometheus"'
+        - '{job="node"'
+        - '{job="contensis"'
+        - '{job="cassandra"'
+        - '{__name__=~"job:.*"}'
 
 # Alternative config file name, searched in ansible templates path.
 prometheus_config_file: 'prometheus.yml.j2'
